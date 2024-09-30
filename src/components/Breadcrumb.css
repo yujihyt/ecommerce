@@ -1,0 +1,49 @@
+.breadcrumb {
+    width: 1440px;
+    height: 64px;
+    top: 124px;
+    padding: 18px 0;
+    gap: 10px;
+    opacity: 1;
+    background-color: #F6F6F6;
+    display: flex;
+    align-items: center;
+  }
+  
+  .breadcrumb-item {
+    width: 80px;
+    height: 25px;
+    gap: 0;
+    opacity: 1;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24.5px;
+    text-align: left;
+    color: #5C5F6A;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+  }
+  
+  .breadcrumb-item-current {
+    width: 40px;
+    height: 25px;
+    gap: 0;
+    opacity: 1;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24.5px;
+    text-align: left;
+    color: #0E1422;
+  }
+  
+  .breadcrumb-separator {
+    padding: 6px 12px;
+    opacity: 50;
+    color: '#000000';
+  }
+  

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
+import Breadcrumb from './components/Breadcrumb';
 // import Categories from './pages/Categories';
 // import About from './pages/About';
 // import Contact from './pages/Contact';
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <Router>
       <Header />
+      <Breadcrumb />
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/categories" element={<Categories />} />
