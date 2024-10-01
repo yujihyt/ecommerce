@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContent';
+import { useCart } from '../context/CartContext';
 
 const CartDropdown: React.FC = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();

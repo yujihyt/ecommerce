@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { fetchProducts } from '../services/productService';
 import CategoryFilter from '../components/CategoryFilter';
 import ProductCard from '../components/ProductCard';
+import { useFavorite } from '../context/FavoriteContext';
+
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { favorites } = useFavorite();
+  const [products, setProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -20,13 +23,15 @@ const Home = () => {
   useEffect(() => {
     if (selectedCategories.length === 0) {
       setFilteredProducts(products);
+    } else if (selectedCategories.includes('Favorites')) {
+      setFilteredProducts(favorites); // Show only favorites
     } else {
       const filtered = products.filter((product: any) =>
         selectedCategories.includes(product.category)
       );
       setFilteredProducts(filtered);
     }
-  }, [selectedCategories, products]);
+  }, [selectedCategories, products, favorites]);
 
   return (
     <div className="container mx-auto p-4">

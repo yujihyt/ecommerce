@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { useCart } from '../context/CartContent';
+import { useCart } from '../context/CartContext';
+import { CartItem } from '../types/CartItem';
+import { useFavorite } from '../context/FavoriteContext';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 type ProductCardProps = {
   id: number;
@@ -10,9 +13,16 @@ type ProductCardProps = {
 
 const ProductCard = ({ id, title, price, image }: ProductCardProps) => {
   const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
+  const { toggleFavorite, favorites } = useFavorite();
+  const isFavorite = favorites.some(item => item.id === id);
   const [hovered, setHovered] = useState(false);
 
   const cartItem = cart.find((item) => item.id === id);
+
+  const handleToggleFavorite = () => {
+    const item: CartItem = { id, title, price, image, quantity: 1 };
+    toggleFavorite(item);
+  };
 
   return (
     <div
@@ -21,6 +31,19 @@ const ProductCard = ({ id, title, price, image }: ProductCardProps) => {
       onMouseLeave={() => setHovered(false)}
     >
       <img src={image} alt={title} className="w-full h-48 object-contain mb-2" />
+      {hovered && (
+        <button
+          onClick={handleToggleFavorite}
+          className="absolute top-2 right-2 z-10"
+          aria-label="Toggle Favorite"
+        >
+          {isFavorite ? (
+            <FaHeart className="text-red-500" />
+          ) : (
+            <FaRegHeart className="text-gray-500" />
+          )}
+        </button>
+      )}
       <h2 className="text-lg font-semibold">{title}</h2>
       <div className="flex justify-between items-center mt-2">
         <span className="text-green-500">In stock</span>

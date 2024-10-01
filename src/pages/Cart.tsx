@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContent';
+import { useCart } from '../context/CartContext';
 
 const CartPage: React.FC = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
@@ -10,14 +10,14 @@ const CartPage: React.FC = () => {
 
   const handleDecrement = (itemId: number, currentQuantity: number) => {
     if (currentQuantity === 1) {
-      removeFromCart(itemId); // Remove the item if the quantity reaches 0
+      removeFromCart(itemId);
     } else {
-      updateQuantity(itemId, currentQuantity - 1); // Decrease quantity
+      updateQuantity(itemId, currentQuantity - 1);
     }
   };
 
   const handleIncrement = (itemId: number, currentQuantity: number) => {
-    updateQuantity(itemId, currentQuantity + 1); // Increase quantity
+    updateQuantity(itemId, currentQuantity + 1);
   };
 
   return (
@@ -29,7 +29,6 @@ const CartPage: React.FC = () => {
         background: '#FFFFFF',
       }}
     >
-      {/* Left side: Cart Items */}
       <div className="flex-1 p-8">
         <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
         {cart.length === 0 ? (
@@ -67,7 +66,6 @@ const CartPage: React.FC = () => {
         )}
       </div>
 
-      {/* Right side: Order Summary */}
       <div className="w-1/3 p-8 border-l">
         <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
         {cart.length === 0 ? (
