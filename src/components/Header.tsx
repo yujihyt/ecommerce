@@ -2,27 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import CartDropdown from './CartDropdown';
-import { CartItem } from '../types/CartItem';
 
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-      price: 109.95,
-      quantity: 2,
-      image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
-    },
-    {
-      id: 2,
-      title: 'Mens Casual Premium Slim Fit T-Shirts ',
-      price: 22.3,
-      quantity: 1,
-      image: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg'
-    }
-  ]);
 
   const navigate = useNavigate();
   const cartRef = useRef<HTMLDivElement>(null);
@@ -86,7 +69,7 @@ const Header: React.FC = () => {
             className="text-2xl cursor-pointer"
             onClick={() => setCartOpen(!cartOpen)}
           />
-          {cartOpen && <CartDropdown cartItems={cartItems} />}
+          {cartOpen && <CartDropdown/>}
         </div>
 
         <FaUser className="text-2xl cursor-pointer" onClick={() => navigate('/user')} />
