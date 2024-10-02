@@ -1,46 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProducts } from '../services/productService';
 import CategoryFilter from '../components/CategoryFilter';
 import ProductCard from '../components/ProductCard';
 import { useFavorite } from '../context/FavoriteContext';
 
 const ITEMS_PER_PAGE = 9;
 
-const Home: React.FC = () => {
+interface HomeProps {
+  filteredProducts: any[];
+}
+
+const Home: React.FC<HomeProps> = ({ filteredProducts }) => {
   const { favorites } = useFavorite();
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [displayedProducts, setDisplayedProducts] = useState<any[]>(filteredProducts);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const data = await fetchProducts();
-      setProducts(data);
-      setFilteredProducts(data);
-    };
-
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    let updatedFilteredProducts = products;
+    let updatedProducts = filteredProducts;
 
     if (selectedCategories.length > 0) {
       if (selectedCategories.includes('Favorites')) {
-        updatedFilteredProducts = favorites;
+        updatedProducts = favorites;
       } else {
-        updatedFilteredProducts = products.filter(product =>
+        updatedProducts = filteredProducts.filter(product =>
           selectedCategories.includes(product.category)
         );
       }
     }
 
-    setFilteredProducts(updatedFilteredProducts);
-  }, [selectedCategories, products, favorites]);
+    setDisplayedProducts(updatedProducts);
+  }, [selectedCategories, filteredProducts, favorites]);
 
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-  const currentItems = filteredProducts.slice(
+  const totalPages = Math.ceil(displayedProducts.length / ITEMS_PER_PAGE);
+  const currentItems = displayedProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );

@@ -6,10 +6,9 @@ import CartDropdown from './CartDropdown';
 interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  filteredProducts: any[];
 }
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, filteredProducts }) => {
+const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery }) => {
   const [cartOpen, setCartOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -17,10 +16,6 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, filteredPr
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -57,16 +52,13 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, filteredPr
       </div>
 
       <div className="flex items-center space-x-4 relative">
-        <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="p-2 text-black rounded-md border"
-            placeholder="Search products..."
-          />
-          <button type="submit" className="bg-button p-2 rounded-md text-main">Search</button>
-        </form>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="p-2 text-black rounded-md border"
+          placeholder="Search products..."
+        />
 
         <div className="relative text-button" ref={cartRef}>
           <FaShoppingCart

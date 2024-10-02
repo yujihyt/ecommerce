@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCategories } from '../services/productService';
 import { useFavorite } from '../context/FavoriteContext';
+import { capitalizeFirstLetterOfEachWord } from '../utils/capitalize-first-letter';
 
 type CategoryFilterProps = {
   selectedCategories: string[];
@@ -42,7 +43,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onC
                 className="mr-2"
               />
               <span className="text-md font-medium text-secondary-text">
-                {category} {category === 'Favorites' && `(${favorites.length})`}
+                {capitalizeFirstLetterOfEachWord(category)} {category === 'Favorites' && `(${favorites.length})`}
               </span>
             </div>
           </div>
