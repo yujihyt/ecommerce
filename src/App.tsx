@@ -7,6 +7,8 @@ import { CartProvider } from './context/CartContext';
 import Cart from './pages/Cart';
 import { FavoriteProvider } from './context/FavoriteContext';
 import { fetchProducts } from './services/productService';
+import Categories from './pages/Categories';
+import PromotionBar from './components/PromotionBar';
 
 const App = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -24,29 +26,27 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (searchQuery) {
-      const lowercasedQuery = searchQuery.toLowerCase();
-      const filtered = products.filter((product) =>
-        product.title.toLowerCase().includes(lowercasedQuery)
-      );
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products);
-    }
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = products.filter((product) =>
+      product.title.toLowerCase().includes(lowercasedQuery)
+    );
+    setFilteredProducts(filtered);
   }, [searchQuery, products]);
 
   return (
     <Router>
       <FavoriteProvider>
         <CartProvider>
-          <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} filteredProducts={filteredProducts}/>
+          <PromotionBar/>
+          <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <Breadcrumb />
           <Routes>
             <Route
               path="/"
-              element={<Home />}
+              element={<Home filteredProducts={filteredProducts} />}
             />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/categories" element={<Categories />} />
           </Routes>
         </CartProvider>
       </FavoriteProvider>
