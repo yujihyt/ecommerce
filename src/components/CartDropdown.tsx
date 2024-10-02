@@ -21,49 +21,48 @@ const CartDropdown: React.FC = () => {
   };
 
   return (
-    <div className="absolute right-0 mt-2 w-64 bg-white text-black shadow-lg rounded-lg p-4 z-50">
-      <h3 className="font-bold text-lg mb-4">Shopping Cart</h3>
+    <div className="absolute right-0 mt-2 w-64 bg-main shadow-lg rounded-lg p-4 z-50">
+      <h3 className="font-bold text-main-text mb-4">Shopping Cart</h3>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <ul>
           {cart.map((item) => (
             <li key={item.id} className="flex items-center justify-between mb-2">
-              <img src={item.image} alt={item.title} className="w-12 h-12 object-cover" />
+              <img src={item.image} alt={item.title} className="max-h-12 max-w-8 object-scale-down" />
               <div className="flex-1 ml-2">
-                <h4 className="text-sm">{item.title}</h4>
-                <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                <p className="text-secondary-text">${item.price.toFixed(2)}</p>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center border m-sm">
                 <button
-                  className="text-red-600 px-2"
+                  className="px-2"
                   onClick={() => handleDecrement(item.id, item.quantity)}
                 >
                   -
                 </button>
-                <span className="px-2">{item.quantity}</span>
+                <span className="px-2 text-main-text">{item.quantity}</span>
                 <button
-                  className="text-green-600 px-2"
+                  className="px-2"
                   onClick={() => handleIncrement(item.id, item.quantity)}
                 >
                   +
                 </button>
               </div>
-              <button className="text-red-600 ml-2" onClick={() => removeFromCart(item.id)}>
+              <button className="text-main-text bg-secondary p-custom-sm ml-2" onClick={() => removeFromCart(item.id)}>
                 <FaTimes />
               </button>
             </li>
           ))}
         </ul>
       )}
-      <div className="mt-4 text-right font-bold">
+      <div className="mt-4 text-right font-bold text-secondary-text">
         Total: ${totalAmount.toFixed(2)}
       </div>
       <div className="mt-4">
         {
           cart.length !== 0 && 
           <button
-            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            className="w-full bg-button text-main font-bold py-2 px-4 rounded"
             onClick={() => navigate('/cart')}
           >
             Finish Purchase

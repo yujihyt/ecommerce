@@ -38,13 +38,13 @@ const Header: React.FC = () => {
   }, [cartOpen]);
 
   return (
-    <header className="bg-gray-800 text-white p-4 flex justify-between items-center relative">
+    <header className="bg-main p-4 flex justify-between items-center relative">
       <div className="flex items-center space-x-4">
         <img src="/vector.png" alt="Project Logo" className="h-10 w-10" />
-        <h1 className="text-2xl font-bold cursor-pointer">
+        <h1 className="text-2xl font-bold cursor-pointer text-main-text">
           <Link to="/">Ecommerce</Link>
         </h1>
-        <nav className="space-x-4">
+        <nav className="space-x-4 text-secondary-text">
           <Link to="/" className="hover:text-blue-400">Home</Link>
           <Link to="/categories" className="hover:text-blue-400">Categories</Link>
           <Link to="/about" className="hover:text-blue-400">About</Link>
@@ -58,13 +58,13 @@ const Header: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="p-2 text-black rounded-md"
+            className="p-2 text-black rounded-md border"
             placeholder="Search products..."
           />
-          <button type="submit" className="bg-blue-500 p-2 rounded-md">Search</button>
+          <button type="submit" className="bg-button p-2 rounded-md text-main">Search</button>
         </form>
 
-        <div className="relative" ref={cartRef}>
+        <div className="relative text-button" ref={cartRef}>
           <FaShoppingCart
             className="text-2xl cursor-pointer"
             onClick={() => setCartOpen(!cartOpen)}
@@ -72,7 +72,7 @@ const Header: React.FC = () => {
           {cartOpen && <CartDropdown/>}
         </div>
 
-        <FaUser className="text-2xl cursor-pointer" onClick={() => navigate('/user')} />
+        <FaUser className="text-2xl cursor-pointer text-button" onClick={() => navigate('/user')} />
       </div>
     </header>
   );

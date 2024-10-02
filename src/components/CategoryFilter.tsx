@@ -29,8 +29,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onC
   };
 
   return (
-    <div className="p-4 border border-gray-300 rounded-lg shadow-md bg-white">
-      <h2 className="text-xl font-semibold mb-4">Categories</h2>
+    <div className="p-4 border border-gray-300 rounded-lg shadow-md bg-white m-md">
+      <h2 className="text-xl font-semibold mb-4 text-main-text">Categories</h2>
       <div className="flex flex-col gap-2">
         {categories.map((category) => (
           <div key={category} className="flex items-center justify-between border-b border-gray-200 py-2">
@@ -41,7 +41,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategories, onC
                 onChange={() => handleCategoryToggle(category)}
                 className="mr-2"
               />
-              <span className="text-md font-medium">
+              <span className="text-md font-medium text-secondary-text">
                 {category} {category === 'Favorites' && `(${favorites.length})`}
               </span>
             </div>

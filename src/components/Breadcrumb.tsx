@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Breadcrumb.css';
 
 const Breadcrumb: React.FC = () => {
   const location = useLocation();
@@ -9,9 +8,9 @@ const Breadcrumb: React.FC = () => {
   const pathnames = location.pathname.split('/').filter((x) => x);
 
   return (
-    <nav className="breadcrumb">
+    <nav className="breadcrumb flex bg-secondary p-custom-md">
       <ul className="flex items-center">
-        <li>
+        <li className="p-custom-sm">
           <span
             onClick={() => navigate('/')}
             className="breadcrumb-item"
@@ -20,7 +19,7 @@ const Breadcrumb: React.FC = () => {
           </span>
         </li>
         {pathnames.length > 0 && (
-          <li className="breadcrumb-separator"> {'>'} </li>
+          <li className="breadcrumb-separator p-custom-sm"> {'>'} </li>
         )}
 
         {pathnames.map((value, index) => {
@@ -28,7 +27,7 @@ const Breadcrumb: React.FC = () => {
           const isLast = index === pathnames.length - 1;
 
           return (
-            <li key={to} className="flex items-center">
+            <li key={to} className="flex items-center p-custom-sm">
               {isLast ? (
                 <span className="breadcrumb-item-current">
                   {value.charAt(0).toUpperCase() + value.slice(1)}

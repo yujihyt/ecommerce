@@ -37,27 +37,27 @@ const CartPage: React.FC = () => {
           <ul className="mb-6">
             {cart.map((item) => (
               <li key={item.id} className="flex items-center justify-between mb-4">
-                <img src={item.image} alt={item.title} className="w-16 h-16 object-cover" />
+                <img src={item.image} alt={item.title} className="max-w-20 max-h-20 object-cover" />
                 <div className="flex-1 ml-4">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
                   <p className="text-gray-600">${item.price.toFixed(2)}</p>
                 </div>
-                <div className="flex items-center">
+                <div className="p-2 text-black rounded-md border">
                   <button
-                    className="text-red-600 px-2"
+                    className="px-2"
                     onClick={() => handleDecrement(item.id, item.quantity)}
                   >
                     -
                   </button>
                   <span className="px-2">{item.quantity}</span>
                   <button
-                    className="text-green-600 px-2"
+                    className="px-2"
                     onClick={() => handleIncrement(item.id, item.quantity)}
                   >
                     +
                   </button>
                 </div>
-                <button className="text-red-600 ml-2" onClick={() => removeFromCart(item.id)}>
+                <button className="text-main-text bg-secondary ml-2 p-custom-md" onClick={() => removeFromCart(item.id)}>
                   <FaTimes />
                 </button>
               </li>
@@ -73,26 +73,39 @@ const CartPage: React.FC = () => {
         ) : (
           <>
             <ul className="mb-6">
-              {cart.map((item) => (
-                <li key={item.id} className="flex justify-between mb-2">
-                  <span>{item.title}</span>
-                  <span>
-                    {item.quantity} x ${item.price.toFixed(2)}
-                  </span>
-                </li>
-              ))}
+              <li className="flex justify-between mb-2">
+                <span>Subtotal:</span>
+                <span>
+                  ${totalAmount.toFixed(2)}
+                </span>
+              </li>
+              <li className="flex justify-between mb-2">
+                <span>Shipping:</span>
+                <span>
+                  Free
+                </span>
+              </li>
+              <li className="flex justify-between mb-2">
+                <span>Tax:</span>
+                <span>
+                  ${(3).toFixed(2)}
+                </span>
+              </li>
             </ul>
-            <div className="flex justify-between font-bold">
-              <span>Total Amount:</span>
-              <span>${totalAmount.toFixed(2)}</span>
+            <div className="flex justify-between font-bold text-main-text">
+              <span>Total:</span>
+              <span>${(totalAmount + 3).toFixed(2)}</span>
             </div>
             <div className="mt-6">
               <button
-                className="bg-blue-500 text-white font-bold py-2 px-6 rounded"
+                className="bg-button text-main font-bold py-2 px-6 rounded w-full"
                 onClick={() => navigate('/checkout')}
               >
                 Proceed to Checkout
               </button>
+            </div>
+            <div className="flex justify-center items-center p-custom-sm">
+              <span onClick={() => navigate('/')} className="underline">Keep Shopping</span>
             </div>
           </>
         )}
