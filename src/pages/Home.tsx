@@ -6,7 +6,7 @@ import { useFavorite } from '../context/FavoriteContext';
 
 const ITEMS_PER_PAGE = 9;
 
-const Home = () => {
+const Home: React.FC = () => {
   const { favorites } = useFavorite();
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
@@ -24,17 +24,19 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedCategories.length === 0) {
-      setFilteredProducts(products);
-    } else if (selectedCategories.includes('Favorites')) {
-      setFilteredProducts(favorites);
-    } else {
-      const filtered = products.filter((product: any) =>
-        selectedCategories.includes(product.category)
-      );
-      setFilteredProducts(filtered);
+    let updatedFilteredProducts = products;
+
+    if (selectedCategories.length > 0) {
+      if (selectedCategories.includes('Favorites')) {
+        updatedFilteredProducts = favorites;
+      } else {
+        updatedFilteredProducts = products.filter(product =>
+          selectedCategories.includes(product.category)
+        );
+      }
     }
-    setCurrentPage(1);
+
+    setFilteredProducts(updatedFilteredProducts);
   }, [selectedCategories, products, favorites]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);

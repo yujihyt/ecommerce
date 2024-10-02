@@ -3,8 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import CartDropdown from './CartDropdown';
 
-const Header: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+interface HeaderProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  filteredProducts: any[];
+}
+
+const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, filteredProducts }) => {
   const [cartOpen, setCartOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -16,7 +21,6 @@ const Header: React.FC = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate(`/search?q=${searchQuery}`);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -52,7 +56,7 @@ const Header: React.FC = () => {
         </nav>
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 relative">
         <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
           <input
             type="text"
@@ -69,7 +73,7 @@ const Header: React.FC = () => {
             className="text-2xl cursor-pointer"
             onClick={() => setCartOpen(!cartOpen)}
           />
-          {cartOpen && <CartDropdown/>}
+          {cartOpen && <CartDropdown />}
         </div>
 
         <FaUser className="text-2xl cursor-pointer text-button" onClick={() => navigate('/user')} />
