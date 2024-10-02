@@ -21,14 +21,7 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <div
-      className="relative mx-auto flex"
-      style={{
-        width: '1351px',
-        height: '808px',
-        background: '#FFFFFF',
-      }}
-    >
+    <div className="relative mx-auto flex flex-col lg:flex-row max-w-screen-xl p-4 bg-main">
       <div className="flex-1 p-8">
         <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
         {cart.length === 0 ? (
@@ -36,7 +29,7 @@ const CartPage: React.FC = () => {
         ) : (
           <ul className="mb-6">
             {cart.map((item) => (
-              <li key={item.id} className="flex items-center justify-between mb-4">
+              <li key={item.id} className="flex items-center justify-between mb-4 border-t p-custom-md">
                 <img src={item.image} alt={item.title} className="max-w-20 max-h-20 object-cover" />
                 <div className="flex-1 ml-4">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
@@ -66,7 +59,7 @@ const CartPage: React.FC = () => {
         )}
       </div>
 
-      <div className="w-1/3 p-8 border-l">
+      <div className="w-full lg:w-1/3 p-4 border lg:border-l-2">
         <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
