@@ -10,7 +10,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery }) => {
   const [cartOpen, setCartOpen] = useState(false);
-
   const navigate = useNavigate();
   const cartRef = useRef<HTMLDivElement>(null);
 
@@ -37,19 +36,20 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery }) => {
   }, [cartOpen]);
 
   return (
-    <header className="bg-main p-4 flex justify-between items-center relative">
-      <div className="flex items-center space-x-4">
+    <header className="bg-main p-4 flex flex-col sm:flex-row justify-between items-center relative">
+      <div className="flex items-center mb-2 sm:mb-0">
         <img src="/vector.png" alt="Project Logo" className="h-10 w-10" />
-        <h1 className="text-2xl font-bold cursor-pointer text-main-text">
+        <h1 className="text-2xl font-bold cursor-pointer text-main-text ml-2">
           <Link to="/">Ecommerce</Link>
         </h1>
-        <nav className="space-x-4 text-secondary-text">
-          <Link to="/" className="hover:text-blue-400">Home</Link>
-          <Link to="/categories" className="hover:text-blue-400">Categories</Link>
-          <Link to="/about" className="hover:text-blue-400">About</Link>
-          <Link to="/contact" className="hover:text-blue-400">Contact</Link>
-        </nav>
       </div>
+
+      <nav className="flex space-x-4 mb-2 sm:mb-0">
+        <Link to="/" className="hover:text-blue-400">Home</Link>
+        <Link to="/categories" className="hover:text-blue-400">Categories</Link>
+        <Link to="/about" className="hover:text-blue-400">About</Link>
+        <Link to="/contact" className="hover:text-blue-400">Contact</Link>
+      </nav>
 
       <div className="flex items-center space-x-4 relative">
         <input
