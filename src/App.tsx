@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Home from './pages/Home';
+import HomePage from './pages/HomePage';
 import Breadcrumb from './components/Breadcrumb';
 import { CartProvider } from './context/CartContext';
-import Cart from './pages/Cart';
+import CartPage from './pages/CartPage';
 import { FavoriteProvider } from './context/FavoriteContext';
 import { fetchProducts } from './services/productService';
-import Categories from './pages/Categories';
+import CategoriesPage from './pages/CategoriesPage';
 import PromotionBar from './components/PromotionBar';
 
 const App = () => {
@@ -43,10 +43,10 @@ const App = () => {
           <Routes>
             <Route
               path="/"
-              element={<Home filteredProducts={filteredProducts} />}
+              element={<HomePage filteredProducts={filteredProducts} />}
             />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/categories" element={<Categories />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
           </Routes>
         </CartProvider>
       </FavoriteProvider>

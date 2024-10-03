@@ -9,7 +9,7 @@ interface HomeProps {
   filteredProducts: any[];
 }
 
-const Home: React.FC<HomeProps> = ({ filteredProducts }) => {
+const HomePage: React.FC<HomeProps> = ({ filteredProducts }) => {
   const { favorites } = useFavorite();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -80,4 +80,4 @@ const Home: React.FC<HomeProps> = ({ filteredProducts }) => {
   );
 };
 
-export default Home;
+export default HomePage;

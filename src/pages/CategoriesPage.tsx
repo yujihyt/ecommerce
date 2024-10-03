@@ -3,7 +3,7 @@ import { fetchProducts } from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import { capitalizeFirstLetterOfEachWord } from '../utils/capitalize-first-letter';
 
-const Categories: React.FC = () => {
+const CategoriesPage: React.FC = () => {
   const [productsByCategory, setProductsByCategory] = useState<Record<string, any[]>>({});
 
   useEffect(() => {
@@ -50,4 +50,4 @@ const Categories: React.FC = () => {
   );
 };
 
-export default Categories;
+export default CategoriesPage;

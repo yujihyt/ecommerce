@@ -1,58 +1,75 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CategoryFilter from './CategoryFilter';
-
-const mockCategories = ['electronics', 'jewelery', 'men\'s clothing', 'women\'s clothing'];
+import { fetchCategories } from '../services/productService';
+import { useFavorite } from '../context/FavoriteContext';
 
 jest.mock('../services/productService', () => ({
-  fetchCategories: jest.fn(() => Promise.resolve(mockCategories)),
+  fetchCategories: jest.fn(),
 }));
 
-describe('CategoryFilter Component', () => {
-  test('renders categories and handles selection correctly', async () => {
-    const mockOnCategoryChange = jest.fn();
-    const selectedCategories: string[] = [];
+jest.mock('../context/FavoriteContext', () => ({
+  useFavorite: jest.fn(),
+}));
 
-    render(<CategoryFilter selectedCategories={selectedCategories} onCategoryChange={mockOnCategoryChange} />);
+const mockFetchCategories = fetchCategories as jest.Mock;
+const mockUseFavorite = useFavorite as jest.Mock;
 
-    expect(await screen.findByText('electronics')).toBeInTheDocument();
-    expect(screen.getByText('jewelery')).toBeInTheDocument();
-    expect(screen.getByText('men\'s clothing')).toBeInTheDocument();
-    expect(screen.getByText('women\'s clothing')).toBeInTheDocument();
+describe('CategoryFilter', () => {
+  const mockOnCategoryChange = jest.fn();
+  const selectedCategories = ['electronics'];
+
+  const setupMocks = () => {
+    mockFetchCategories.mockResolvedValue(['electronics', 'jewelery', 'men clothing']);
+    mockUseFavorite.mockReturnValue({ favorites: [{ id: 1, title: 'Favorite Product' }] });
+  };
+
+  beforeEach(() => {
+    setupMocks();
+    jest.clearAllMocks();
   });
 
-  test('handles multi-category selection correctly', async () => {
-    const mockOnCategoryChange = jest.fn();
-    const selectedCategories: string[] = [];
-
+  it('should render categories fetched from the API', async () => {
     render(<CategoryFilter selectedCategories={selectedCategories} onCategoryChange={mockOnCategoryChange} />);
 
-    const electronicsButton = await screen.findByText('electronics');
-    const jeweleryButton = screen.getByText('jewelery');
-
-    fireEvent.click(electronicsButton);
-    expect(mockOnCategoryChange).toHaveBeenCalledWith(['electronics']);
-
-    fireEvent.click(jeweleryButton);
-    expect(mockOnCategoryChange).toHaveBeenCalledWith(['electronics', 'jewelery']);
-
-    fireEvent.click(electronicsButton);
-    expect(mockOnCategoryChange).toHaveBeenCalledWith(['jewelery']);
+    await waitFor(() => {
+      expect(screen.getByText('Electronics')).toBeInTheDocument();
+      expect(screen.getByText('Jewelery')).toBeInTheDocument();
+      expect(screen.getByText('Men Clothing')).toBeInTheDocument();
+      expect(screen.getByText('Favorites (1)')).toBeInTheDocument();
+    });
   });
 
-  test('highlights selected categories', async () => {
-    const mockOnCategoryChange = jest.fn();
-    const selectedCategories = ['electronics'];
-
+  it('should toggle category selection', async () => {
     render(<CategoryFilter selectedCategories={selectedCategories} onCategoryChange={mockOnCategoryChange} />);
 
-    const electronicsButton = await screen.findByText('electronics');
-    const jeweleryButton = screen.getByText('jewelery');
+    await waitFor(() => expect(screen.getByText('Electronics')).toBeInTheDocument());
 
-    expect(electronicsButton).toHaveClass('bg-blue-500');
-    expect(jeweleryButton).not.toHaveClass('bg-blue-500');
+    const jeweleryCheckbox = screen.getByLabelText('Jewelery');
+    fireEvent.click(jeweleryCheckbox);
 
-    fireEvent.click(jeweleryButton);
-    expect(mockOnCategoryChange).toHaveBeenCalledWith(['electronics', 'jewelery']);
+    expect(mockOnCategoryChange).toHaveBeenCalledWith([...selectedCategories, 'jewelery']);
+
+    const electronicsCheckbox = screen.getByLabelText('Electronics');
+    fireEvent.click(electronicsCheckbox);
+
+    expect(mockOnCategoryChange).toHaveBeenCalledWith([]);
+  });
+
+  it('should display the correct number of favorite items', async () => {
+    render(<CategoryFilter selectedCategories={selectedCategories} onCategoryChange={mockOnCategoryChange} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Favorites (1)')).toBeInTheDocument();
+    });
+  });
+
+  it('should handle an empty categories list', async () => {
+    mockFetchCategories.mockResolvedValueOnce([]);
+    
+    render(<CategoryFilter selectedCategories={[]} onCategoryChange={mockOnCategoryChange} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Favorites (1)')).toBeInTheDocument();
+    });
   });
 });
